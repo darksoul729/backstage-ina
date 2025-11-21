@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion"; // Import Variants untuk typing yang lebih baik
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowUpRight, Menu, X, Instagram, Mail, Phone, ArrowRight } from "lucide-react";
 import { THEME, navLinks } from "@/app/data";
 
@@ -19,15 +19,15 @@ export const Navbar = () => {
   }, [isOpen]);
 
   // --- CONFIG ANIMASI PREMIUM (BEZIER CURVE) ---
-  // FIX: Definisikan transition langsung di dalam variants atau gunakan tipe any sementara jika malas strict typing
-  // Tapi best practice-nya adalah mendefinisikan easing sebagai array angka (cubic-bezier) untuk efek premium
-  const premiumEase = [0.76, 0, 0.24, 1]; 
+  // FIX: Tambahkan tipe data eksplisit [number, number, number, number]
+  // Ini memberi tahu TypeScript bahwa ini adalah Cubic Bezier yang valid, bukan array acak.
+  const premiumEase: [number, number, number, number] = [0.76, 0, 0.24, 1]; 
 
   const menuVars: Variants = {
     initial: { y: "-100%" },
     animate: { 
       y: "0%", 
-      transition: { duration: 0.8, ease: premiumEase } // Gunakan array cubic-bezier langsung
+      transition: { duration: 0.8, ease: premiumEase } 
     },
     exit: { 
       y: "-100%", 
