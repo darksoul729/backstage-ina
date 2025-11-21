@@ -19,7 +19,8 @@ export const Navbar = () => {
   }, [isOpen]);
 
   // --- CONFIG ANIMASI PREMIUM (BEZIER CURVE) ---
-  const transition = { duration: 0.8, ease: [0.76, 0, 0.24, 1] };
+// Ubah ease array -> ease string
+const transition = { duration: 0.8, ease: "easeInOut" };
 
   const menuVars = {
     initial: { y: "-100%" },
@@ -33,19 +34,21 @@ export const Navbar = () => {
     }
   };
 
-  const containerVars = {
-    initial: { transition: { staggerChildren: 0.1, staggerDirection: -1 } },
-    open: { transition: { delayChildren: 0.3, staggerChildren: 0.1, staggerDirection: 1 } }
-  };
+  // Tidak pakai easing, jadi aman
+const containerVars = {
+  initial: { transition: { staggerChildren: 0.1, staggerDirection: -1 } },
+  open: { transition: { delayChildren: 0.3, staggerChildren: 0.1, staggerDirection: 1 } }
+};
 
   const linkVars = {
-    initial: { y: "100%", opacity: 0 },
-    open: { 
-        y: "0%", 
-        opacity: 1,
-        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } 
-    }
-  };
+  initial: { y: "100%", opacity: 0 },
+  open: { 
+      y: "0%", 
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeInOut" } 
+  }
+};
+
 
   const handleScrollContact = () => {
     setIsOpen(false);
