@@ -62,7 +62,7 @@ export const Navbar = () => {
       <nav className="fixed top-6 left-0 w-full z-50 flex justify-center px-4">
         <div className="bg-[#1a0518]/80 backdrop-blur-xl border border-white/10 rounded-full px-2 pl-6 py-2 flex items-center justify-between gap-8 shadow-2xl w-full max-w-[95%] md:max-w-fit transition-all duration-500 hover:border-[#9db035]/30">
           
-          {/* LOGO */}
+        {/* LOGO */}
           <div className="flex items-center gap-3 group cursor-default">
              <div 
                 className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-transform duration-700 group-hover:rotate-[360deg]" 
@@ -70,9 +70,11 @@ export const Navbar = () => {
              >
                b
              </div>
-             <span className="font-bold tracking-widest text-sm text-white uppercase hidden md:block">Backstage.Ina</span>
+             {/* PERBAIKAN: Hapus 'hidden md:block' agar teks muncul di semua ukuran layar */}
+             <span className="font-bold tracking-widest text-sm text-white uppercase">
+                Backstage.Ina
+             </span>
           </div>
-
           {/* MENU DESKTOP */}
           <div className="hidden md:flex items-center gap-1 bg-white/5 rounded-full px-2 py-1 border border-white/5">
             {navLinks.map((item) => (

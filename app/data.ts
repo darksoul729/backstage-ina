@@ -13,7 +13,6 @@ export const navLinks = [
   { title: "Proyek", href: "/proyek" },
   { title: "Layanan", href: "/layanan" },
   { title: "Studio", href: "/studio" },
-  { title: "Karir", href: "/karir" },
   { title: "Jadwal", href: "/upcoming" },
 ];
 

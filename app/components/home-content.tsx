@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useRef, MouseEvent } from "react";
+import { useState, MouseEvent } from "react";
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowUpRight, CheckCircle2, Mail, Phone, Instagram, MapPin, Zap, Layers, Trophy } from "lucide-react";
 import { PillButton } from "./ui-elements";
 import { workflowSteps } from "@/app/data";
 
-// --- SUB-KOMPONEN: SPOTLIGHT CARD (Untuk Bento Grid Keren) ---
+// --- 1. SUB-KOMPONEN: SPOTLIGHT CARD (Bento Grid Keren) ---
 function SpotlightCard({ children, className = "", title, sub }: any) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -22,7 +22,7 @@ function SpotlightCard({ children, className = "", title, sub }: any) {
       className={`group relative border border-white/10 bg-white/[0.02] overflow-hidden rounded-[2rem] ${className}`}
       onMouseMove={handleMouseMove}
     >
-      {/* Efek Spotlight (Cahaya mengikuti mouse) */}
+      {/* Efek Spotlight */}
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-300 group-hover:opacity-100"
         style={{
@@ -35,8 +35,7 @@ function SpotlightCard({ children, className = "", title, sub }: any) {
           `,
         }}
       />
-      
-      {/* Border Glow saat Hover */}
+      {/* Border Glow */}
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-300 group-hover:opacity-100"
         style={{
@@ -50,7 +49,7 @@ function SpotlightCard({ children, className = "", title, sub }: any) {
         }}
       />
 
-      {/* Content Container */}
+      {/* Content */}
       <div className="relative h-full p-8 flex flex-col z-10">
         {title && (
             <div className="mb-6 flex justify-between items-start">
@@ -66,18 +65,16 @@ function SpotlightCard({ children, className = "", title, sub }: any) {
         {children}
       </div>
       
-      {/* Noise Texture Overlay */}
+      {/* Noise Texture */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
     </div>
   );
 }
-// --- SUB-KOMPONEN: DUAL MARQUEE (SOLID & JELAS) ---
+
+// --- 2. SUB-KOMPONEN: DUAL MARQUEE (Solid & Jelas) ---
 const DualMarquee = () => {
     return (
-        // Container: Background Hijau Solid (#9db035), bukan transparan
         <div className="w-full py-12 overflow-hidden relative flex flex-col gap-0 rotate-[-2deg] scale-110 origin-center my-20 bg-[#9db035] shadow-[0_0_50px_rgba(157,176,53,0.4)] border-y-8 border-[#1a0518] z-20">
-            
-            {/* Row 1: Teks Hitam Solid (Sangat Terbaca) */}
             <div className="flex whitespace-nowrap animate-marquee border-b border-[#1a0518]/20 pb-1">
                 {[...Array(10)].map((_, i) => (
                     <span key={i} className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-[#1a0518] mx-4 flex items-center gap-6">
@@ -85,8 +82,6 @@ const DualMarquee = () => {
                     </span>
                 ))}
             </div>
-
-            {/* Row 2: Teks Outline Tebal Hitam */}
             <div className="flex whitespace-nowrap animate-marquee-reverse pt-1">
                 {[...Array(10)].map((_, i) => (
                     <span key={i} className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-transparent mx-4 flex items-center gap-6" style={{ WebkitTextStroke: "2px #1a0518" }}>
@@ -94,19 +89,17 @@ const DualMarquee = () => {
                     </span>
                 ))}
             </div>
-
             <style jsx>{`
                 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
                 @keyframes marquee-reverse { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-                .animate-marquee { animation: marquee 20s linear infinite; }
-                .animate-marquee-reverse { animation: marquee-reverse 20s linear infinite; }
+                .animate-marquee { animation: marquee 30s linear infinite; }
+                .animate-marquee-reverse { animation: marquee-reverse 30s linear infinite; }
             `}</style>
         </div>
     )
 }
 
-
-// --- MAIN COMPONENT ---
+// --- 3. MAIN COMPONENT (Disatukan) ---
 export const HomeContent = () => {
   const [activeStep, setActiveStep] = useState(0);
 
@@ -132,12 +125,12 @@ export const HomeContent = () => {
         </div>
       </section>
 
-      {/* SECTION 2: DUAL MARQUEE (NEW) */}
+      {/* SECTION 2: DUAL MARQUEE */}
       <section className="py-10 overflow-hidden">
           <DualMarquee />
       </section>
 
-      {/* SECTION 3: LAYANAN (SPOTLIGHT BENTO GRID - NEW) */}
+      {/* SECTION 3: LAYANAN (SPOTLIGHT BENTO GRID) */}
       <section className="w-full px-6 md:px-16 lg:px-24 py-10 md:py-20 flex flex-col justify-center">
         <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
@@ -260,10 +253,8 @@ export const HomeContent = () => {
          </div>
       </section>
 
-    {/* SECTION 5: FOOTER LENGKAP */}
+      {/* SECTION 5: FOOTER LENGKAP & SOLID */}
       <footer id="footer-contact" className="w-full relative bg-[#150313] border-t border-white/10 mt-20 overflow-hidden">
-        
-        {/* Dekorasi Latar Belakang (Glow) */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#9db035] rounded-full blur-[150px] opacity-5 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
         <div className="px-6 md:px-16 lg:px-24 py-20 relative z-10">
@@ -286,22 +277,16 @@ export const HomeContent = () => {
                 </p>
               </div>
 
-              {/* Kontak Detail */}
               <div className="space-y-6">
                  <div className="flex items-center md:items-start gap-4">
-                    <div className="p-3 rounded-full bg-white/5 border border-white/10 text-[#9db035] shrink-0">
-                      <Mail size={20}/>
-                    </div>
+                    <div className="p-3 rounded-full bg-white/5 border border-white/10 text-[#9db035] shrink-0"><Mail size={20}/></div>
                     <div>
                       <p className="text-[10px] md:text-xs text-slate-500 font-mono uppercase tracking-widest mb-1">Email Resmi</p>
                       <a href="mailto:project@backstage.ina" className="text-lg font-bold text-white hover:text-[#9db035] transition-colors break-all">project@backstage.ina</a>
                     </div>
                  </div>
-
                  <div className="flex items-center md:items-start gap-4">
-                    <div className="p-3 rounded-full bg-white/5 border border-white/10 text-[#9db035] shrink-0">
-                      <Phone size={20}/>
-                    </div>
+                    <div className="p-3 rounded-full bg-white/5 border border-white/10 text-[#9db035] shrink-0"><Phone size={20}/></div>
                     <div>
                       <p className="text-[10px] md:text-xs text-slate-500 font-mono uppercase tracking-widest mb-1">WhatsApp / Telepon</p>
                       <a href="#" className="text-lg font-bold text-white hover:text-[#9db035] transition-colors">+62 821 5555 9000</a>
@@ -310,61 +295,59 @@ export const HomeContent = () => {
               </div>
             </div>
 
-            {/* KOLOM KANAN: Form Premium */}
-            <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-2xl">
+            {/* KOLOM KANAN: Form High Contrast */}
+            <div className="bg-[#13020e] border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-2xl ring-1 ring-white/5">
               <form className="flex flex-col gap-6">
-                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-mono text-[#9db035] uppercase tracking-widest ml-1">Nama / Perusahaan</label>
-                    <input type="text" placeholder="John Doe / PT Maju" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-[#9db035] focus:bg-white/10 transition-all" />
+                    <label className="text-xs font-bold text-[#9db035] uppercase tracking-widest ml-1">Nama / Perusahaan</label>
+                    <input type="text" placeholder="John Doe" className="w-full bg-[#1a0518] border border-white/20 rounded-xl px-4 py-4 text-white placeholder-white/30 focus:outline-none focus:border-[#9db035] focus:ring-1 focus:ring-[#9db035] transition-all" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-mono text-[#9db035] uppercase tracking-widest ml-1">Email Resmi</label>
-                    <input type="email" placeholder="email@kantor.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-[#9db035] focus:bg-white/10 transition-all" />
+                    <label className="text-xs font-bold text-[#9db035] uppercase tracking-widest ml-1">Email Resmi</label>
+                    <input type="email" placeholder="email@kantor.com" className="w-full bg-[#1a0518] border border-white/20 rounded-xl px-4 py-4 text-white placeholder-white/30 focus:outline-none focus:border-[#9db035] focus:ring-1 focus:ring-[#9db035] transition-all" />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-mono text-[#9db035] uppercase tracking-widest ml-1">Jenis Acara</label>
-                  <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#9db035] focus:bg-white/10 transition-all appearance-none cursor-pointer">
-                    <option className="bg-[#1a0518]">Konser Musik / Festival</option>
-                    <option className="bg-[#1a0518]">Corporate Gathering</option>
-                    <option className="bg-[#1a0518]">Product Launch</option>
-                    <option className="bg-[#1a0518]">Pameran / Eksibisi</option>
-                    <option className="bg-[#1a0518]">Lainnya</option>
-                  </select>
+                  <label className="text-xs font-bold text-[#9db035] uppercase tracking-widest ml-1">Jenis Acara</label>
+                  <div className="relative">
+                    <select className="w-full bg-[#1a0518] border border-white/20 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-[#9db035] focus:ring-1 focus:ring-[#9db035] transition-all appearance-none cursor-pointer">
+                        <option className="bg-[#1a0518]">Konser Musik / Festival</option>
+                        <option className="bg-[#1a0518]">Corporate Gathering</option>
+                        <option className="bg-[#1a0518]">Product Launch</option>
+                        <option className="bg-[#1a0518]">Pameran / Eksibisi</option>
+                        <option className="bg-[#1a0518]">Lainnya</option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">▼</div>
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-mono text-[#9db035] uppercase tracking-widest ml-1">Detail Kebutuhan</label>
-                  <textarea rows={4} placeholder="Ceritakan sedikit tentang visi acara Anda, estimasi tanggal, dan lokasi..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-[#9db035] focus:bg-white/10 transition-all resize-none"></textarea>
+                  <label className="text-xs font-bold text-[#9db035] uppercase tracking-widest ml-1">Detail Kebutuhan</label>
+                  <textarea rows={4} placeholder="Ceritakan visi acara Anda..." className="w-full bg-[#1a0518] border border-white/20 rounded-xl px-4 py-4 text-white placeholder-white/30 focus:outline-none focus:border-[#9db035] focus:ring-1 focus:ring-[#9db035] transition-all resize-none leading-relaxed"></textarea>
                 </div>
 
-                <button type="button" className="group w-full py-4 mt-2 bg-[#9db035] hover:bg-[#8ca025] text-[#1a0518] rounded-xl font-bold text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(157,176,53,0.4)]">
+                <button type="button" className="group w-full py-4 mt-2 bg-[#9db035] hover:bg-[#8ca025] text-[#1a0518] rounded-xl font-bold text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#9db035]/20 hover:shadow-[#9db035]/40 hover:scale-[1.02]">
                   Kirim Pesan
                   <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"/>
                 </button>
-
               </form>
             </div>
 
           </div>
 
-          {/* Footer Bottom / Copyright */}
-          <div className="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-500 text-xs font-mono">
+          {/* Footer Bottom */}
+          <div className="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-400 text-xs font-mono">
              <div className="flex items-center gap-2">
                <div className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white font-bold text-xs">b</div>
-               {/* Link Rahasia ke Admin di simbol Copyright */}
                <span><a href="/admin/dashboard" className="hover:text-[#9db035] cursor-default">&copy;</a> 2025 Backstage Ina Group.</span>
              </div>
-             
              <div className="flex flex-wrap justify-center gap-6 md:gap-8">
                <a href="#" className="hover:text-[#9db035] transition-colors">Privacy Policy</a>
                <a href="#" className="hover:text-[#9db035] transition-colors">Terms of Service</a>
                <a href="/karir" className="hover:text-[#9db035] transition-colors">Karir</a>
              </div>
-
              <div className="flex gap-4">
                 {[Instagram, Mail, Phone, MapPin].map((Icon, i) => (
                   <a key={i} href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#9db035] hover:text-[#1a0518] hover:border-[#9db035] transition-all">
