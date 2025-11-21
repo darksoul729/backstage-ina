@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion"; // Import Variants untuk typing yang lebih baik
 import { ArrowUpRight, Menu, X, Instagram, Mail, Phone, ArrowRight } from "lucide-react";
 import { THEME, navLinks } from "@/app/data";
 
@@ -19,36 +19,35 @@ export const Navbar = () => {
   }, [isOpen]);
 
   // --- CONFIG ANIMASI PREMIUM (BEZIER CURVE) ---
-// Ubah ease array -> ease string
-const transition = { duration: 0.8, ease: "easeInOut" };
+  // FIX: Definisikan transition langsung di dalam variants atau gunakan tipe any sementara jika malas strict typing
+  // Tapi best practice-nya adalah mendefinisikan easing sebagai array angka (cubic-bezier) untuk efek premium
+  const premiumEase = [0.76, 0, 0.24, 1]; 
 
-  const menuVars = {
+  const menuVars: Variants = {
     initial: { y: "-100%" },
     animate: { 
       y: "0%", 
-      transition: transition 
+      transition: { duration: 0.8, ease: premiumEase } // Gunakan array cubic-bezier langsung
     },
     exit: { 
       y: "-100%", 
-      transition: transition 
+      transition: { duration: 0.8, ease: premiumEase } 
     }
   };
 
-  // Tidak pakai easing, jadi aman
-const containerVars = {
-  initial: { transition: { staggerChildren: 0.1, staggerDirection: -1 } },
-  open: { transition: { delayChildren: 0.3, staggerChildren: 0.1, staggerDirection: 1 } }
-};
+  const containerVars: Variants = {
+    initial: { transition: { staggerChildren: 0.1, staggerDirection: -1 } },
+    open: { transition: { delayChildren: 0.3, staggerChildren: 0.1, staggerDirection: 1 } }
+  };
 
-  const linkVars = {
-  initial: { y: "100%", opacity: 0 },
-  open: { 
-      y: "0%", 
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeInOut" } 
-  }
-};
-
+  const linkVars: Variants = {
+    initial: { y: "100%", opacity: 0 },
+    open: { 
+        y: "0%", 
+        opacity: 1,
+        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } 
+    }
+  };
 
   const handleScrollContact = () => {
     setIsOpen(false);
