@@ -1,65 +1,47 @@
-import Image from "next/image";
+// app/page.tsx
+"use client";
 
-export default function Home() {
+import { Suspense } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
+import { ScrollControls, Scroll } from "@react-three/drei";
+import { Navbar } from "@/app/components/navbar";
+import { ParallaxShapes, Lighting } from "@/app/components/home-3d";
+import { HomeContent } from "@/app/components/home-content";
+
+// Wrapper untuk logika scroll pages
+const ResponsiveScrollWrapper = () => {
+  const { width } = useThree((state) => state.viewport);
+  
+  let pageCount = 4.4; 
+  if (width < 5) pageCount = 5.8; 
+  else if (width < 10) pageCount = 4.8; 
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <ScrollControls pages={pageCount} damping={0.2}>
+      <Lighting />
+      <ParallaxShapes />
+      <Scroll html style={{ width: "100%" }}>
+        <HomeContent />
+      </Scroll>
+    </ScrollControls>
+  );
+};
+
+export default function Page() {
+  return (
+    <div className="h-screen w-full relative bg-[#1a0518] text-[#f8fafc] selection:bg-[#9db035] selection:text-[#1a0518] overflow-hidden">
+      
+      <Navbar />
+
+      <Canvas shadows dpr={[1, 2]} performance={{ min: 0.5 }} camera={{ position: [0, 0, 8], fov: 35 }} className="pointer-events-none">
+        <Suspense fallback={null}>
+          <ResponsiveScrollWrapper />
+        </Suspense>
+      </Canvas>
+
+      {/* Noise Texture */}
+      <div className="fixed inset-0 z-[60] pointer-events-none opacity-[0.04] mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+    
     </div>
   );
 }

@@ -1,0 +1,39 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  date        String
+  location    String
+  description String   @db.Text
+  price       String
+  status      String   // Status Tiket (Available, Sold Out)
+  
+  // Pastikan ini ada di baris baru, JANGAN digabung dengan komentar di atasnya
+  timeline    String   @default("Upcoming") // Isinya: "Upcoming" atau "Finished"
+
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ... model lainnya ...
+
+model Project {
+  id        String   @id @default(cuid())
+  title     String
+  category  String   // Contoh: "Music Festival", "Corporate"
+  image     String   // URL Gambar
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
